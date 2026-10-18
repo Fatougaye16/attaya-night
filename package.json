@@ -1,0 +1,263 @@
+{
+  "name": "attaya-night",
+  "displayName": "Attaya Night",
+  "description": "A dark, playful theme and a little attaya teapot that brews while you code, builds foam while you focus, reheats while you take a break, watches your training runs and pours when things go well.",
+  "version": "0.2.0",
+  "publisher": "fatougaye",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#12141F",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fatougaye16/attaya-night.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Fatougaye16/attaya-night/issues"
+  },
+  "homepage": "https://github.com/Fatougaye16/attaya-night#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "theme",
+    "dark theme",
+    "pet",
+    "pomodoro",
+    "attaya",
+    "gambia",
+    "focus",
+    "machine learning",
+    "prayer times"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "themes": [
+      {
+        "label": "Attaya Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/attaya-night-color-theme.json"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "attaya",
+          "title": "Attaya",
+          "icon": "media/attaya.svg"
+        }
+      ]
+    },
+    "views": {
+      "attaya": [
+        {
+          "type": "webview",
+          "id": "attaya.view",
+          "name": "Attaya"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "attaya.toggleRound",
+        "title": "Pause / Resume the Round",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.skipBreak",
+        "title": "Skip the Break",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.freshPot",
+        "title": "Brew a Fresh Pot",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.show",
+        "title": "Show the Teapot",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.chooseTeapot",
+        "title": "Choose a Teapot",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.weeklyReport",
+        "title": "Weekly Glass Report",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.watchTraining",
+        "title": "Watch a Training Run…",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.stopTraining",
+        "title": "Stop Watching the Training Run",
+        "category": "Attaya"
+      },
+      {
+        "command": "attaya.devSetBestStreak",
+        "title": "Developer: Set Best Streak",
+        "category": "Attaya"
+      }
+    ],
+    "configuration": {
+      "title": "Attaya",
+      "properties": {
+        "attaya.roundMinutes": {
+          "type": "number",
+          "default": 25,
+          "minimum": 1,
+          "description": "Length of each of the three attaya rounds, in minutes."
+        },
+        "attaya.breakMinutes": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "description": "Length of the break between rounds, in minutes. The break only counts down while you are away from the editor."
+        },
+        "attaya.idleMinutes": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "description": "Minutes without activity before the teapot dozes off and the round pauses."
+        },
+        "attaya.boilingThreshold": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "description": "Number of errors across your workspace that makes the teapot boil over."
+        },
+        "attaya.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the round timer in the status bar."
+        },
+        "attaya.language": {
+          "type": "string",
+          "default": "english",
+          "enum": [
+            "english",
+            "wolof"
+          ],
+          "enumDescriptions": [
+            "Mood lines in English only.",
+            "Add a short Wolof phrase above the mood, with the English on hover."
+          ],
+          "description": "Language for the teapot's little phrases."
+        },
+        "attaya.sounds": {
+          "type": "boolean",
+          "default": false,
+          "description": "Play small sounds: a pour and a glass clink when Attaya pours, a lid rattle when it boils over. Sounds play while the Attaya sidebar has been opened in this window."
+        },
+        "attaya.training.finishPattern": {
+          "type": "string",
+          "default": "",
+          "description": "Regular expression (case-insensitive) for the log line that marks the end of a training run. Leave empty for the default, which matches lines like \"Training complete\" and Hugging Face's \"train_runtime\"."
+        },
+        "attaya.prayer.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Pause the round and give a gentle reminder at prayer times. Times are calculated offline from your location."
+        },
+        "attaya.prayer.latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "default": null,
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Your latitude for prayer times, e.g. 13.4549 for Banjul."
+        },
+        "attaya.prayer.longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "default": null,
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Your longitude for prayer times, e.g. -16.5790 for Banjul."
+        },
+        "attaya.prayer.method": {
+          "type": "string",
+          "default": "MuslimWorldLeague",
+          "enum": [
+            "MuslimWorldLeague",
+            "Egyptian",
+            "Karachi",
+            "UmmAlQura",
+            "Dubai",
+            "MoonsightingCommittee",
+            "NorthAmerica",
+            "Kuwait",
+            "Qatar",
+            "Singapore",
+            "Tehran",
+            "Turkey"
+          ],
+          "description": "Calculation method for prayer times. Use the one your local mosque follows."
+        },
+        "attaya.prayer.madhab": {
+          "type": "string",
+          "default": "shafi",
+          "enum": [
+            "shafi",
+            "hanafi"
+          ],
+          "enumDescriptions": [
+            "Shafi, Maliki and Hanbali: the earlier Asr time.",
+            "Hanafi: the later Asr time."
+          ],
+          "description": "Juristic method for the Asr time."
+        },
+        "attaya.prayer.pauseMinutes": {
+          "type": "number",
+          "default": 15,
+          "minimum": 1,
+          "description": "How long the round stays paused at a prayer time. Press Resume to carry on sooner."
+        },
+        "attaya.prayer.ramadanMode": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "on",
+            "off"
+          ],
+          "enumDescriptions": [
+            "On during Ramadan by the Umm al-Qura calendar. Local moon sighting can differ by a day; switch it on or off by hand if so.",
+            "Always on.",
+            "Never on."
+          ],
+          "description": "In Ramadan mode the teapot rests from Fajr until iftar (Maghrib). Needs prayer times to be enabled."
+        }
+      }
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "attaya.devSetBestStreak",
+          "when": "attaya.devMode"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "adhan": "^4.4.3"
+  }
+}
